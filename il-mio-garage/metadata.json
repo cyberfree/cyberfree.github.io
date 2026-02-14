@@ -1,0 +1,7 @@
+{
+  "name": "Il mio garage",
+  "description": "Un'applicazione moderna per gestire le auto di famiglia, scadenze e manutenzione con assistenza AI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

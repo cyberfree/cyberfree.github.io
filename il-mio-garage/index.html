@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <title>Il mio garage</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3082/3082045.png">
+    
+    <!-- Es-module-shims: Fondamentale per far girare l'app su Huawei/Honor -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.1/dist/es-module-shims.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            background-color: #f8fafc;
+            margin: 0;
+            overscroll-behavior-y: contain;
+        }
+        #root:empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #e2e8f0;
+            border-bottom-color: #4f46e5;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error-hint {
+            display: none;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #64748b;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <div id="root">
+        <div class="loader"></div>
+        <p style="font-weight: 600; color: #1e293b;">Caricamento Garage...</p>
+        <div id="compatibility-hint" class="error-hint">
+            <p style="color: #ef4444; font-weight: bold; margin-bottom: 8px;">Problemi al caricamento?</p>
+            <ol style="text-align: left; margin-left: 20px;">
+                <li>Copia l'indirizzo della pagina</li>
+                <li>Apri <strong>Google Chrome</strong></li>
+                <li>Incolla l'indirizzo e premi Invio</li>
+            </ol>
+        </div>
+    </div>
+
+    <script type="module" src="./index.tsx"></script>
+
+    <script>
+        // Mostra il suggerimento dopo 5 secondi se l'app non è partita
+        setTimeout(() => {
+            const root = document.getElementById('root');
+            const hint = document.getElementById('compatibility-hint');
+            if (root && root.innerHTML.includes('loader') && hint) {
+                hint.style.display = 'block';
+            }
+        }, 5000);
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(() => {});
+            });
+        }
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
